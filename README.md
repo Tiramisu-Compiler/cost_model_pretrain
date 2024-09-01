@@ -1,5 +1,5 @@
 # Pre-training Tiramisu Cost Model
-This project uses pre-training technique to reduce the expensive data requirement of  the cost model used in Tiramisu's autoscheduler. 
+This project uses pre-training technique to reduce the expensive data requirement of the cost model used in Tiramisu's autoscheduler. In this repository, one can choose to pre-train on only the access matrices (`/pretrain_access_matrices`), or pre-train on the entire computation vector (`/pretrain_comp_vector`). 
 
 ## Installation & Configuring the repository
 Follow the same step as described in the Tiramisu Cost Model repo: https://github.com/Tiramisu-Compiler/cost_model. The step of training of the cost model after pre-training is also the same. 
@@ -23,5 +23,5 @@ After an auto-encoder is pre-trained, navigate to the file `/conf/config.yml` an
 
 The documentation of other config option please refer to the original cost model repo: https://github.com/Tiramisu-Compiler/cost_model.
 
-## Extra Notes
+## Extra Notes on Pretraining on Comp Vector
 Note that although we did not change the cost model architecture, there is a slight modifcation on the dataset for training the cost model: the upper bound of the loop in a computation vector is taken its $\text{log}_{10}$ value. This is because for some loop optimization, iteration bound are multiplied together. This can lead to very large value in the loop bound (~1e8). As the reconstruction loss of the autoencoder is MSE, this can easily lead to the loss to explode. **When training the cost model on existing dataset, remember to apply this to the input program, Or just use the `generate_dataset.py` file in this repository to regenerate dataset from the program annotation.** 
